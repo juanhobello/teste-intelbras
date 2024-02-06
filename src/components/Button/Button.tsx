@@ -1,6 +1,5 @@
-import ButtonMui from "@mui/material/Button";
 import { ReactNode } from "react";
-import "./styles.css";
+import { CustomButton } from "./styles";
 
 type ButtonProps = {
   children: ReactNode;
@@ -9,9 +8,9 @@ type ButtonProps = {
 
 const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
   return (
-    <ButtonMui className="MuiButtonBase-root" onClick={onClick}>
+    <CustomButton onClick={onClick} className="MuiButtonBase-root">
       {children}
-    </ButtonMui>
+    </CustomButton>
   );
 };
 

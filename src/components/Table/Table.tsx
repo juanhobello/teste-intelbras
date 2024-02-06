@@ -1,14 +1,19 @@
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowModel } from "@mui/x-data-grid";
 import "./styles.css";
 
-const Table = () => {
+type TableProps = {
+  columns: GridColDef[];
+  rows: GridRowModel[];
+};
+
+const Table: React.FC<TableProps> = ({ columns, rows }) => {
   return (
     <div className="table-container">
       <DataGrid
         checkboxSelection
         onRowSelectionModelChange={() => console.log("Test")}
-        columns={[]}
-        rows={[]}
+        columns={columns}
+        rows={rows}
       />
     </div>
   );
