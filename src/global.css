@@ -1,0 +1,32 @@
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --green-200: #00a335;
+  --green-100: #87c984;
+  --blue-300: #31586c;
+  --blue-200: #50788a;
+  --blue-100: #6990a7;
+  --gray-900: #50788a;
+  --gray-600: #3e5055;
+  --gray-500: #8b979f;
+  --gray-400: #bbcad2;
+  --gray-300: #d6dfe1;
+  --gray-200: #e2e9ed;
+  --gray-100: #ebeeee;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--white);
+  color: var(--gray-600);
+  height: 100%;
+}
+
+#root {
+  height: 100dvh;
+}
