@@ -1,4 +1,9 @@
-.buttonMui {
+/* .buttonMui {
+  color: var(--white);
+  background: var(--green-200);
+} */
+
+.MuiButtonBase-root {
   color: var(--white);
   background: var(--green-200);
 }

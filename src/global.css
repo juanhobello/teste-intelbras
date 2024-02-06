@@ -24,7 +24,7 @@
 body {
   background: var(--white);
   color: var(--gray-600);
-  height: 100%;
+  height: 100% !important;
 }
 
 #root {
