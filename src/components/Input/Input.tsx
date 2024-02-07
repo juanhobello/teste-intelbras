@@ -1,22 +1,24 @@
 import { CustomMuiTextField } from "./styles";
 
-type InputProps = {
+interface InputProps {
   label: string;
   type: string;
-  value?: string | number;
-  onChange: (value: string | number) => void;
-};
+  value: string | number;
+  name: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const Input: React.FC<InputProps> = ({ label, type, value, onChange }) => {
+function Input({ label, type, value, name, onChange }: InputProps) {
   return (
     <CustomMuiTextField
       label={label}
       type={type}
       value={value}
-      onChange={(event) => onChange(event.target.value)}
+      name={name}
+      onChange={onChange}
       variant="outlined"
     />
   );
-};
+}
 
 export default Input;

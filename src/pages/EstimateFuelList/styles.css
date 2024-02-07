@@ -1,5 +1,8 @@
 .container {
   width: 100%;
-  height: calc(100% - 2.5rem);
-  padding: 5rem;
+  height: 100%;
+  padding: 2rem 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }

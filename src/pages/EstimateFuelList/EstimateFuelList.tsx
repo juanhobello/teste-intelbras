@@ -1,8 +1,8 @@
-import { GridValueGetterParams } from "@mui/x-data-grid";
+import { useState } from "react";
 import Table from "../../components/Table/Table";
 import EstimateFuelForm from "../../forms/EstimateFuelForm/EstimateFuelForm";
 import "./styles.css";
-import { useState } from "react";
+import { columnsDefs } from "../config/columnsDefs";
 
 const rows = [
   { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
@@ -19,41 +19,14 @@ const rows = [
 const EstimateFuelList = () => {
   const [data] = useState(rows);
 
-  const columns = [
-    {
-      field: "firstName",
-      headerName: "First name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "lastName",
-      headerName: "Last name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      width: 110,
-      editable: true,
-    },
-    {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    },
-  ];
-
   return (
     <div className="container">
       <EstimateFuelForm />
-      <Table columns={columns} rows={data} />
+      <Table
+        columns={columnsDefs}
+        rows={data}
+        onRowSelectionModelChange={(row) => console.log(row)}
+      />
     </div>
   );
 };

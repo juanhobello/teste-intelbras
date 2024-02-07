@@ -4,14 +4,19 @@ import "./styles.css";
 type TableProps = {
   columns: GridColDef[];
   rows: GridRowModel[];
+  onRowSelectionModelChange: (selectionModel: GridRowModel) => void;
 };
 
-const Table: React.FC<TableProps> = ({ columns, rows }) => {
+const Table: React.FC<TableProps> = ({
+  columns,
+  rows,
+  onRowSelectionModelChange,
+}) => {
   return (
     <div className="table-container">
       <DataGrid
         checkboxSelection
-        onRowSelectionModelChange={() => console.log("Test")}
+        onRowSelectionModelChange={onRowSelectionModelChange}
         columns={columns}
         rows={rows}
       />
