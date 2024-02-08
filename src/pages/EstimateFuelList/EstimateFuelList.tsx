@@ -6,29 +6,15 @@ import IconButton from "../../components/IconButton/IconButton";
 import EstimateFuelForm from "../../forms/EstimateFuelForm/EstimateFuelForm";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import TableLegend from "../../components/TableLegend/TableLegend";
 import generatorUUID from "../../utils/generatorUUID";
 import saveDataInLocalStorage from "../../services/saveDataInLocalStorage";
 import getDataLocalStorage from "../../services/getDataLocalStorage";
 import { columnsDefs } from "./config/columnsDefs";
+import { DataObject, FormProperties } from "../../types/types";
 import "./styles.css";
-import TableLegend from "../../components/TableLegend/TableLegend";
 
-interface FormProperties {
-  id: string;
-  licensePlate: string;
-  model: string;
-  tankCapacity: number;
-  maximumLoad: number;
-  averageConsumption: number;
-  distanceTraveled: number;
-  consumption: string;
-}
-
-interface DataObject {
-  [key: string]: FormProperties;
-}
-
-const dataRow = {
+const dataFormDefault = {
   id: "",
   licensePlate: "",
   model: "",
@@ -42,7 +28,8 @@ const dataRow = {
 const EstimateFuelList = () => {
   const [data, setData] = useState<DataObject>({});
   const [selectRows, setSelectRows] = useState<string[]>([]);
-  const [dataEditing, setDataEditing] = useState<FormProperties>(dataRow);
+  const [dataEditing, setDataEditing] =
+    useState<FormProperties>(dataFormDefault);
 
   useEffect(() => {
     const localStorage = getDataLocalStorage("listConsumption");
@@ -54,16 +41,17 @@ const EstimateFuelList = () => {
   }, []);
 
   const onSaveData = (value: FormProperties) => {
-    const dataEdit = data;
+    let dataEdit = data;
 
     if (value.id) {
-      setData((prev) => ({ ...prev, [value.id]: { ...value, id: value.id } }));
+      dataEdit = { ...dataEdit, [value.id]: { ...value, id: value.id } };
     } else {
       const id = generatorUUID();
-      setData((prev) => ({ ...prev, [id]: { ...value, id } }));
+      dataEdit = { ...dataEdit, [id]: { ...value, id } };
     }
 
-    setDataEditing(dataRow);
+    setDataEditing(dataFormDefault);
+    setData(dataEdit);
     saveDataInLocalStorage("listConsumption", dataEdit);
   };
 

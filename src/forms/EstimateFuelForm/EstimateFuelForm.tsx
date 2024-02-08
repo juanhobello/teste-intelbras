@@ -1,20 +1,10 @@
 import { useFormik } from "formik";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import "./styles.css";
 import { useCallback, useEffect } from "react";
 import validationSchema from "./validationSchema";
-
-interface FormProperties {
-  id: string;
-  licensePlate: string;
-  model: string;
-  tankCapacity: number;
-  maximumLoad: number;
-  averageConsumption: number;
-  distanceTraveled: number;
-  consumption: string;
-}
+import { FormProperties } from "../../types/types";
+import "./styles.css";
 
 interface EstimateFuelFormProps {
   onSubmit: (value: FormProperties) => void;
