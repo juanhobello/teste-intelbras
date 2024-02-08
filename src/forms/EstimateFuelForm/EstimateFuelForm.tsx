@@ -108,7 +108,9 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
         />
       </div>
       <div className="form-buttons">
-        <Button type="submit">Calcular</Button>
+        <Button type="submit" width="10rem">
+          Calcular
+        </Button>
       </div>
     </form>
   );
