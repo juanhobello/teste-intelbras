@@ -1,10 +1,15 @@
-import { DataGrid, GridColDef, GridRowModel } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowId,
+  GridRowModel,
+} from "@mui/x-data-grid";
 import "./styles.css";
 
 type TableProps = {
   columns: GridColDef[];
   rows: GridRowModel[];
-  onRowSelectionModelChange: (selectionModel: GridRowModel) => void;
+  onRowSelectionModelChange: (row: string[]) => void;
 };
 
 const Table: React.FC<TableProps> = ({
@@ -12,11 +17,15 @@ const Table: React.FC<TableProps> = ({
   rows,
   onRowSelectionModelChange,
 }) => {
+  const onRowsSelected = (selectRows: GridRowId[]) => {
+    onRowSelectionModelChange(selectRows.map((id) => id.toString()));
+  };
+
   return (
     <div className="table-container">
       <DataGrid
         checkboxSelection
-        onRowSelectionModelChange={onRowSelectionModelChange}
+        onRowSelectionModelChange={onRowsSelected}
         columns={columns}
         rows={rows}
       />

@@ -1,31 +1,90 @@
 import { useState } from "react";
 import Table from "../../components/Table/Table";
 import EstimateFuelForm from "../../forms/EstimateFuelForm/EstimateFuelForm";
+import IconButton from "../../components/IconButton/IconButton";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import { columnsDefs } from "./config/columnsDefs";
 import "./styles.css";
-import { columnsDefs } from "../config/columnsDefs";
+import generatorUUID from "../../utils/generatorUUID";
 
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 31 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 31 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 11 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+interface FormProperties {
+  id: string;
+  licensePlate: string;
+  model: string;
+  tankCapacity: number;
+  maximumLoad: number;
+  averageConsumption: number;
+  distanceTraveled: number;
+  consumption: string;
+}
+
+interface DataObject {
+  [key: string]: FormProperties;
+}
+
+const dataRow = {
+  id: "",
+  licensePlate: "",
+  model: "",
+  tankCapacity: 0,
+  maximumLoad: 0,
+  averageConsumption: 0,
+  distanceTraveled: 0,
+  consumption: "0",
+};
 
 const EstimateFuelList = () => {
-  const [data] = useState(rows);
+  const [data, setData] = useState<DataObject>({});
+  const [selectRows, setSelectRows] = useState<string[]>([]);
+  const [dataEditing, setDataEditing] = useState<FormProperties>(dataRow);
+
+  const onSaveData = (value: FormProperties) => {
+    if (value.id) {
+      const dataEdit = data;
+      dataEdit[value.id] = value;
+      setData(dataEdit);
+    } else {
+      const id = generatorUUID();
+      setData((prev) => ({ [id]: { ...value, id: id }, ...prev }));
+    }
+    setDataEditing(dataRow);
+  };
+
+  const onDeleteData = () => {
+    const keysToDelete = selectRows;
+
+    const newList = Object.fromEntries(
+      Object.entries(data).filter(([key]) => !keysToDelete.includes(key))
+    );
+
+    setData(newList);
+  };
+
+  const onEditData = () => {
+    const id = selectRows[0];
+
+    setDataEditing(data[id]);
+  };
 
   return (
     <div className="container">
-      <EstimateFuelForm />
+      <EstimateFuelForm onSubmit={onSaveData} dataEdit={dataEditing} />
+      <div className="header-edit-table">
+        <IconButton
+          onClick={onEditData}
+          disabled={selectRows.length === 1 ? false : true}
+        >
+          <ModeEditOutlineOutlinedIcon />
+        </IconButton>
+        <IconButton onClick={onDeleteData} disabled={selectRows.length === 0}>
+          <DeleteOutlinedIcon />
+        </IconButton>
+      </div>
       <Table
         columns={columnsDefs}
-        rows={data}
-        onRowSelectionModelChange={(row) => console.log(row)}
+        rows={Object.values(data).reverse()}
+        onRowSelectionModelChange={setSelectRows}
       />
     </div>
   );

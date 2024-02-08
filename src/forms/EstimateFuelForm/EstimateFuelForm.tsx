@@ -1,45 +1,65 @@
+import { useFormik } from "formik";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { useFormik } from "formik";
 import "./styles.css";
-import { useState } from "react";
+import { useCallback, useEffect } from "react";
 
 interface FormProperties {
+  id: string;
   licensePlate: string;
   model: string;
   tankCapacity: number;
   maximumLoad: number;
   averageConsumption: number;
   distanceTraveled: number;
+  consumption: string;
 }
 
-const EstimateFuelForm = () => {
-  const [consumptionKm, setConsumptionKm] = useState(0);
+interface EstimateFuelFormProps {
+  onSubmit: (value: FormProperties) => void;
+  dataEdit: FormProperties;
+}
 
+function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
   const initialFormState: FormProperties = {
+    id: "",
     licensePlate: "",
     model: "",
     tankCapacity: 0,
     maximumLoad: 0,
     averageConsumption: 0,
     distanceTraveled: 0,
+    consumption: "0",
   };
 
   const handleSubmit = (value: FormProperties) => {
     const averageWeight: number =
       value.maximumLoad / (value.distanceTraveled * 0.001);
 
-    const consumption =
-      (value.averageConsumption * 1000) / (averageWeight * 1000);
+    const consumption = (
+      (value.averageConsumption * 1000) /
+      (averageWeight * 1000)
+    ).toFixed(2);
 
-    setConsumptionKm(consumption);
-    console.log({ ...value, consumption });
+    onSubmit({ ...value, consumption, id: dataEdit.id });
+    formik.resetForm();
+    formik.registerField;
   };
 
   const formik = useFormik({
     initialValues: initialFormState,
     onSubmit: handleSubmit,
   });
+
+  const setDataFormik = useCallback(() => {
+    formik.setValues(dataEdit);
+  }, [dataEdit, formik]);
+
+  useEffect(() => {
+    if (dataEdit.id) {
+      setDataFormik();
+    }
+  }, [dataEdit]);
 
   return (
     <form className="form-container" onSubmit={formik.handleSubmit}>
@@ -90,12 +110,8 @@ const EstimateFuelForm = () => {
       <div className="form-buttons">
         <Button type="submit">Calcular</Button>
       </div>
-      <div>
-        {consumptionKm} litro(s) de combustível por tonelada transportada por
-        km.
-      </div>
     </form>
   );
-};
+}
 
 export default EstimateFuelForm;
