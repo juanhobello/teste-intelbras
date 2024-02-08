@@ -1,24 +1,30 @@
 import { ReactNode } from "react";
 import { CustomButton } from "./styles";
 
-type ButtonProps = {
+interface ButtonProps {
   children: ReactNode;
   type: "button" | "submit" | "reset" | undefined;
   width?: string;
+  disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-};
+}
 
-const Button: React.FC<ButtonProps> = ({ children, onClick, type, width }) => {
+export default function Button({
+  children,
+  onClick,
+  type,
+  width,
+  disabled,
+}: ButtonProps) {
   return (
     <CustomButton
       onClick={onClick}
       className="MuiButtonBase-root"
       type={type}
+      disabled={disabled}
       sx={{ width: width }}
     >
       {children}
     </CustomButton>
   );
-};
-
-export default Button;
+}

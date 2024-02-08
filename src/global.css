@@ -15,6 +15,9 @@
   --gray-primary: #d6dfe1;
   --gray-200: #e2e9ed;
   --gray-100: #ebeeee;
+  --red-status: #b91222;
+  --green-status: #00a195;
+  --yellow-status: #eab42a;
 }
 
 * {
@@ -27,6 +30,7 @@ body {
   background: var(--white);
   color: var(--gray-600);
   height: 100% !important;
+  font-family: "Roboto", sans-serif;
 }
 
 #root {

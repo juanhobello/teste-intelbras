@@ -1,0 +1,11 @@
+.badge {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.2rem;
+}
+
+.flag-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

@@ -13,7 +13,7 @@ export default function IconButton({
   onClick,
 }: IconButtonProps) {
   return (
-    <IconButtonMui aria-label="delete" onClick={onClick} disabled={disabled}>
+    <IconButtonMui onClick={onClick} disabled={disabled}>
       {children}
     </IconButtonMui>
   );

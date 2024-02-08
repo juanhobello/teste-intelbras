@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import Header from "../../layout/Header/Header";
+import Main from "../../layout/Main/Main";
 import Table from "../../components/Table/Table";
-import EstimateFuelForm from "../../forms/EstimateFuelForm/EstimateFuelForm";
 import IconButton from "../../components/IconButton/IconButton";
+import EstimateFuelForm from "../../forms/EstimateFuelForm/EstimateFuelForm";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import generatorUUID from "../../utils/generatorUUID";
-import { columnsDefs } from "./config/columnsDefs";
-import "./styles.css";
 import saveDataInLocalStorage from "../../services/saveDataInLocalStorage";
 import getDataLocalStorage from "../../services/getDataLocalStorage";
-import Main from "../../layout/Main/Main";
-import Header from "../../layout/Header/Header";
+import { columnsDefs } from "./config/columnsDefs";
+import "./styles.css";
+import TableLegend from "../../components/TableLegend/TableLegend";
 
 interface FormProperties {
   id: string;
@@ -103,11 +104,14 @@ const EstimateFuelList = () => {
               <DeleteOutlinedIcon />
             </IconButton>
           </div>
-          <Table
-            columns={columnsDefs}
-            rows={Object.values(data).reverse()}
-            onRowSelectionModelChange={setSelectRows}
-          />
+          <div className="table-container">
+            <Table
+              columns={columnsDefs}
+              rows={Object.values(data).reverse()}
+              onRowSelectionModelChange={setSelectRows}
+            />
+          </div>
+          <TableLegend />
         </div>
       </Main>
     </>
