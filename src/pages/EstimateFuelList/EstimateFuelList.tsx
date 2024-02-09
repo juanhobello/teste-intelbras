@@ -26,7 +26,7 @@ const dataFormDefault = {
 
 const EstimateFuelList = () => {
   const { data, add, edit, remove, getDataEdit } = useDataList();
-  const [selectRows, setSelectRows] = useState<string[]>([]);
+  const [selectRows, setSelectRows] = useState<any[]>([]);
   const [dataEditing, setDataEditing] =
     useState<FormProperties>(dataFormDefault);
 
@@ -44,7 +44,7 @@ const EstimateFuelList = () => {
   };
 
   const handleEditData = () => {
-    const [id] = selectRows;
+    const id: any = selectRows[0];
     const dataEdit = getDataEdit(id);
     setDataEditing(dataEdit);
   };

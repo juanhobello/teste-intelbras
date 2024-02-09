@@ -38,10 +38,8 @@ export default function useDataList() {
   };
 
   const getDataEdit = (id: string) => {
-    if (id) {
-      const row = data[id];
-      return row;
-    }
+    const row = data[id];
+    return row;
   };
 
   return {
