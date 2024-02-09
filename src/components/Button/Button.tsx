@@ -3,7 +3,7 @@ import { CustomButton } from "./styles";
 
 interface ButtonProps {
   children: ReactNode;
-  type: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset" | undefined;
   width?: string;
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -12,7 +12,7 @@ interface ButtonProps {
 export default function Button({
   children,
   onClick,
-  type,
+  type = "button",
   width,
   disabled,
 }: ButtonProps) {

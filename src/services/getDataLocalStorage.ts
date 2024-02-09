@@ -8,6 +8,6 @@ export default function getDataLocalStorage(keyName: string) {
       return null;
     }
   } catch (error) {
-    console.error("Erro: localStorage não está disponível no navegador.");
+    console.error(`Erro: ${error}`);
   }
 }

@@ -6,17 +6,17 @@ import {
 } from "@mui/x-data-grid";
 import "./styles.css";
 
-type TableProps = {
+interface TableProps {
   columns: GridColDef[];
   rows: GridRowModel[];
   onRowSelectionModelChange: (row: string[]) => void;
-};
+}
 
-const Table: React.FC<TableProps> = ({
+export default function Table({
   columns,
   rows,
   onRowSelectionModelChange,
-}) => {
+}: TableProps) {
   const onRowsSelected = (selectRows: GridRowId[]) => {
     onRowSelectionModelChange(selectRows.map((id) => id.toString()));
   };
@@ -31,6 +31,4 @@ const Table: React.FC<TableProps> = ({
       />
     </div>
   );
-};
-
-export default Table;
+}

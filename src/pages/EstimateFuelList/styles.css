@@ -1,8 +1,8 @@
 .container {
   width: 100%;
-  max-width: 80rem;
+  max-width: 80rem !important;
   height: 100%;
-  padding: 2rem 0;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -13,9 +13,10 @@
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
+  height: 3rem;
+  align-items: center;
 }
 
-.table-container {
-  width: 100%;
+.table-area {
   flex: 1;
 }

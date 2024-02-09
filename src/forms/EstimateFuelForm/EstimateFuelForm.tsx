@@ -5,14 +5,15 @@ import { useCallback, useEffect } from "react";
 import validationSchema from "./validationSchema";
 import { FormProperties } from "../../types/types";
 import "./styles.css";
+import fuelEstimateModel from "../../services/fuelEstimateModel";
 
 interface EstimateFuelFormProps {
-  onSubmit: (value: FormProperties) => void;
+  onSubmited: (value: FormProperties) => void;
   dataEdit: FormProperties;
 }
 
-function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
-  const initialFormState: FormProperties = {
+function EstimateFuelForm({ onSubmited, dataEdit }: EstimateFuelFormProps) {
+  const initialFormState = {
     id: "",
     licensePlate: "",
     model: "",
@@ -24,15 +25,10 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
   };
 
   const handleSubmit = (value: FormProperties) => {
-    const averageWeight: number =
-      value.maximumLoad / (value.distanceTraveled * 0.001);
+    const service = fuelEstimateModel({ ...value });
+    const consumption = service.getConsumption();
 
-    const consumption = (
-      (value.averageConsumption * 1000) /
-      (averageWeight * 1000)
-    ).toFixed(2);
-
-    onSubmit({ ...value, consumption, id: dataEdit.id });
+    onSubmited({ ...value, consumption, id: dataEdit.id });
     formik.resetForm();
     formik.registerField;
   };
@@ -42,6 +38,8 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+
+  const { touched, errors, values, handleChange, handleBlur } = formik;
 
   const setDataFormik = useCallback(() => {
     formik.setValues(dataEdit);
@@ -60,13 +58,11 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
           label="Placa"
           type="text"
           name="licensePlate"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.licensePlate}
-          error={
-            formik.touched.licensePlate && Boolean(formik.errors.licensePlate)
-          }
-          helperText={formik.touched.licensePlate && formik.errors.licensePlate}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.licensePlate}
+          error={touched.licensePlate && Boolean(errors.licensePlate)}
+          helperText={touched.licensePlate && errors.licensePlate}
         />
         <Input
           label="Modelo"
@@ -74,9 +70,9 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
           name="model"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.model}
-          error={formik.touched.model && Boolean(formik.errors.model)}
-          helperText={formik.touched.model && formik.errors.model}
+          value={values.model}
+          error={touched.model && Boolean(errors.model)}
+          helperText={touched.model && errors.model}
         />
         <Input
           label="Capacidade Tanque"
@@ -84,11 +80,9 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
           name="tankCapacity"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.tankCapacity}
-          error={
-            formik.touched.tankCapacity && Boolean(formik.errors.tankCapacity)
-          }
-          helperText={formik.touched.tankCapacity && formik.errors.tankCapacity}
+          value={values.tankCapacity}
+          error={touched.tankCapacity && Boolean(errors.tankCapacity)}
+          helperText={touched.tankCapacity && errors.tankCapacity}
           adornment="lt"
         />
         <Input
@@ -97,11 +91,9 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
           name="maximumLoad"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.maximumLoad}
-          error={
-            formik.touched.maximumLoad && Boolean(formik.errors.maximumLoad)
-          }
-          helperText={formik.touched.maximumLoad && formik.errors.maximumLoad}
+          value={values.maximumLoad}
+          error={touched.maximumLoad && Boolean(errors.maximumLoad)}
+          helperText={touched.maximumLoad && errors.maximumLoad}
           adornment="t"
         />
         <Input
@@ -110,15 +102,11 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
           name="averageConsumption"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.averageConsumption}
+          value={values.averageConsumption}
           error={
-            formik.touched.averageConsumption &&
-            Boolean(formik.errors.averageConsumption)
+            touched.averageConsumption && Boolean(errors.averageConsumption)
           }
-          helperText={
-            formik.touched.averageConsumption &&
-            formik.errors.averageConsumption
-          }
+          helperText={touched.averageConsumption && errors.averageConsumption}
           adornment="lt"
         />
         <Input
@@ -127,14 +115,9 @@ function EstimateFuelForm({ onSubmit, dataEdit }: EstimateFuelFormProps) {
           name="distanceTraveled"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.distanceTraveled}
-          error={
-            formik.touched.distanceTraveled &&
-            Boolean(formik.errors.distanceTraveled)
-          }
-          helperText={
-            formik.touched.distanceTraveled && formik.errors.distanceTraveled
-          }
+          value={values.distanceTraveled}
+          error={touched.distanceTraveled && Boolean(errors.distanceTraveled)}
+          helperText={touched.distanceTraveled && errors.distanceTraveled}
           adornment="km"
         />
       </div>
